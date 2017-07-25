@@ -20,6 +20,7 @@
 
 package org.kde.kdeconnect;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -27,13 +28,17 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import org.kde.kdeconnect.Backends.BaseLink;
 import org.kde.kdeconnect.Backends.BaseLinkProvider;
 import org.kde.kdeconnect.Backends.LanBackend.LanLinkProvider;
+import org.kde.kdeconnect.Helpers.NotificationHelper;
 import org.kde.kdeconnect.Helpers.SecurityHelpers.RsaHelper;
 import org.kde.kdeconnect.Helpers.SecurityHelpers.SslHelper;
+import org.kde.kdeconnect.UserInterface.MaterialActivity;
+import org.kde.kdeconnect_tp.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -264,6 +269,18 @@ public class BackgroundService extends Service {
         for (BaseLinkProvider a : linkProviders) {
             a.onStart();
         }
+
+        //if (Build.VERSION.SDK_INT >= 26) {
+            Notification noti = new NotificationCompat.Builder(this)
+                    .setContentIntent(NotificationHelper.createPendingIntentForActivity(this, MaterialActivity.class))
+                    .setSmallIcon(R.drawable.ic_notification)
+                    .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+                    .setShowWhen(false)
+                    .setPriority(NotificationCompat.PRIORITY_MIN)
+                    .build();
+
+            startForeground(1714, noti);
+        //}
     }
 
     void initializeSecurityParameters() {
@@ -327,7 +344,11 @@ public class BackgroundService extends Service {
                     }
                 }
                 Intent serviceIntent = new Intent(c, BackgroundService.class);
-                c.startService(serviceIntent);
+                if (Build.VERSION.SDK_INT >= 26) {
+                    c.startForegroundService(serviceIntent);
+                } else {
+                    c.startService(serviceIntent);
+                }
             }
         }).start();
     }

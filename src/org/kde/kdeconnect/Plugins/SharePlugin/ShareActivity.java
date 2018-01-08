@@ -24,7 +24,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-public class ShareActivity extends ActionBarActivity {
+public class ShareActivity extends AppCompatActivity {
 
     private MenuItem menuProgress;
 

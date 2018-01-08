@@ -4,8 +4,8 @@
     android:versionCode="1660"
     android:versionName="1.6.6">
 
-    <uses-sdk android:minSdkVersion="9"
-              android:targetSdkVersion="22" />
+    <uses-sdk android:minSdkVersion="14"
+              android:targetSdkVersion="26" />
 
     <supports-screens
         android:anyDensity="true"

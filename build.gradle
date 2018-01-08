@@ -1,22 +1,18 @@
-allprojects {
+buildscript {
     repositories {
         jcenter()
         maven {
             url "https://maven.google.com"
         }
     }
-}
-
-buildscript {
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.1'
     }
 }
 
 apply plugin: 'com.android.application'
 
 android {
-    buildToolsVersion '26.0.1'
     compileSdkVersion 26
     defaultConfig {
         minSdkVersion 14
@@ -72,22 +68,18 @@ android {
 }
 
 dependencies {
-
     repositories {
+        jcenter()
+        maven { url "https://maven.google.com/" }
         mavenCentral()
     }
-
-    compile 'com.android.support:support-v4:26.0.0'
-    compile 'com.android.support:appcompat-v7:26.0.0'
-    compile 'com.android.support:design:26.0.0'
-
     compile 'org.apache.sshd:sshd-core:0.8.0' //0.9 seems to fail on Android 6 and 1.+ requires java.nio.file, which doesn't exist in Android
-
     compile 'com.madgag.spongycastle:pkix:1.54.0.0' //For SSL certificate generation
-
     // Testing
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.1'// Because mockito has some problems with dex environment
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.1' // Because mockito has some problems with dex environment
     androidTestCompile 'org.skyscreamer:jsonassert:1.3.0'
-
+    compile 'com.android.support:design:27.0.2'
+    compile 'com.android.support:support-v4:27.0.2'
+    compile 'com.android.support:appcompat-v7:27.0.2'
 }
